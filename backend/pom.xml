@@ -59,6 +59,13 @@
             <scope>system</scope>
             <systemPath>${pom.basedir}/lib/taobao-sdk-java-auto_1479188381469-20210906.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.aliyun.dingboot</groupId>
+            <artifactId>dingboot-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/dingboot-common-0.0.1-SNAPSHOT.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>

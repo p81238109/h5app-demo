@@ -1,8 +1,10 @@
 package com.dingtalk.controller;
 
+import com.dingtalk.api.response.OapiV2UserGetResponse;
 import com.dingtalk.config.AppConfig;
 import com.dingtalk.model.RpcServiceResult;
 import com.dingtalk.service.UserManager;
+import com.taobao.api.ApiException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,17 +42,18 @@ public class LoginController {
     public RpcServiceResult login(@RequestParam(value = "authCode") String authCode) {
         log.info("login request!!! authCode:{}", authCode);
         try {
-            // 1. 获取用户id
-            String userId = userManager.getUserId(authCode);
-            // 2. 获取用户名称
-            String userName = userManager.getUserName(userId);
-            // 3. 返回用户身份
+            // 1. 获取用户
+            OapiV2UserGetResponse.UserGetResponse userGetResponse = userManager.login(authCode);
+            // 2. 返回用户身份
             Map<String, Object> resultMap = new HashMap<>();
-            resultMap.put("userId", userId);
-            resultMap.put("userName", userName);
+            resultMap.put("userId", userGetResponse.getUserid());
+            resultMap.put("userName", userGetResponse.getName());
 
             return RpcServiceResult.getSuccessResult(resultMap);
-        } catch (Exception ex) {
+        } catch (ApiException e) {
+            e.printStackTrace();
+            return RpcServiceResult.getFailureResult(e.getErrCode(), e.getErrMsg());
+        }  catch (Exception ex) {
             ex.printStackTrace();
             return RpcServiceResult.getFailureResult("-1", "login exception");
         }
