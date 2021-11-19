@@ -40,7 +40,7 @@ public class LoginController {
      */
     @GetMapping(value = "/login")
     public RpcServiceResult login(@RequestParam(value = "authCode") String authCode) {
-        log.info("login request!!! authCode:{}", authCode);
+        //log.info("login request!!! authCode:{}", authCode);
         try {
             // 1. 获取用户
             OapiV2UserGetResponse.UserGetResponse userGetResponse = userManager.login(authCode);
